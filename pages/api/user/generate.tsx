@@ -15,7 +15,7 @@ export default async function POST(req: any) {
   let src = "";
   try {
     user = JSON.parse(query);
-    const res = await fetch("https://tradao-canvas.vercel.app/api/image", {
+    const res = await fetch("https://tradao-canvas.vercel.app/image", {
       method: "post",
       mode: "cors",
       headers: {
