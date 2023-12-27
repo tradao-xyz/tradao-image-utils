@@ -9,7 +9,8 @@ const tradaoLogo = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGYAAAAUCAYAAA
 
 export default async function POST(req: any) {
   const data = decodeURIComponent((req.nextUrl as any).search.slice(1) || "");
-  const query = decodeURIComponent(Buffer.from(data, 'base64').toString('utf8'));
+  const query = Buffer.from(data, 'base64').toString('utf8');
+  console.log('query:', query)
   let user = null;
   let src = "";
   try {
