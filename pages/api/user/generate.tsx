@@ -1,6 +1,5 @@
 import { ImageResponse } from "@vercel/og";
-import React, { useRef, useEffect } from "react";
-import { NextApiRequest } from "next";
+import React from "react";
 
 export const config = {
   runtime: "edge",
