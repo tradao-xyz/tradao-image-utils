@@ -39,8 +39,7 @@ export default async function POST(req: any) {
       user.addr.length
     )}`;
   }
-
-  return new ImageResponse(
+  const imageResponse = new ImageResponse(
     (
       <div
         style={{
@@ -281,4 +280,6 @@ export default async function POST(req: any) {
       height: 600,
     }
   );
+  console.log(`imageResponse --- ${JSON.stringify(imageResponse)}`)
+  return imageResponse;
 }
