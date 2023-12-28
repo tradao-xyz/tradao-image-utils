@@ -1,4 +1,5 @@
 import { kv } from '@vercel/kv';
+import { ImageResponse } from '@vercel/og';
 
 
 export const config = {
@@ -6,7 +7,6 @@ export const config = {
 };
 
 export default async function GET(req: any, res: any) {
-
   const data = (req.nextUrl as any).search.slice(1) || "";
   const params = data.split('&')
   let key = ''
@@ -20,7 +20,13 @@ export default async function GET(req: any, res: any) {
       const kvValue = await kv.get(key);
       console.log(`kvValue--- ${kvValue}`)
       const imageUrl = `https://node.tradao.xyz/api/user/generate?${kvValue}`
-      return Response.redirect(imageUrl)
+
+      return new ImageResponse(
+        <img src={imageUrl} style={{ width: 600, height: 300 }} />, {
+        width: 600,
+        height: 300
+      }
+      )
       // res.statusCode = 200;
       // return Response.json({ imageUrl }, {
       //   status: 200
