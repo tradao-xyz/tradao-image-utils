@@ -22,9 +22,9 @@ export default async function GET(req: any, res: any) {
       const imageUrl = `https://node.tradao.xyz/api/user/generate?${kvValue}`
 
       return new ImageResponse(
-        <img src={imageUrl} style={{ width: 600, height: 300 }} />, {
-        width: 600,
-        height: 300
+        <img src={imageUrl} style={{ width: 1200, height: 600 }} />, {
+        width: 1200,
+        height: 600
       }
       )
       // res.statusCode = 200;
