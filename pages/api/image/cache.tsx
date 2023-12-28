@@ -6,6 +6,7 @@ export const config = {
 };
 
 export default async function GET(req: any, res: any) {
+
   const data = (req.nextUrl as any).search.slice(1) || "";
   const params = data.split('&')
   let key = ''
@@ -19,10 +20,11 @@ export default async function GET(req: any, res: any) {
       const kvValue = await kv.get(key);
       console.log(`kvValue--- ${kvValue}`)
       const imageUrl = `https://node.tradao.xyz/api/user/generate?${kvValue}`
+      return Response.redirect(imageUrl)
       // res.statusCode = 200;
-      return Response.json({ imageUrl }, {
-        status: 200
-      });
+      // return Response.json({ imageUrl }, {
+      //   status: 200
+      // });
     } catch (e) {
       // res.statusCode = 500;
       console.log("kv get err", e);
