@@ -50,7 +50,8 @@ export default async function POST(req: any) {
 
   try {
     const key = `:${user.addr}:${exchange}`
-    const kvValue = await kv.hgetall(key);
+    await kv.set(key, data);
+    const kvValue = await kv.get(key);
     console.log(`kvValue--- ${kvValue}`)
   } catch (e) {
     console.log("kv err", e);
