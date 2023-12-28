@@ -20,19 +20,19 @@ export default async function GET(req: any, res: any) {
       console.log(`kvValue--- ${kvValue}`)
       const imageUrl = `https://node.tradao.xyz/api/user/generate?${kvValue}`
       // res.statusCode = 200;
-      Response.json({ imageUrl }, {
+      return Response.json({ imageUrl }, {
         status: 200
       });
     } catch (e) {
       // res.statusCode = 500;
       console.log("kv get err", e);
-      Response.json({ error: "Internal Server Error" }, {
+      return Response.json({ error: "Internal Server Error" }, {
         status: 500
       });
     }
   } else {
     // res.statusCode = 400;
-    Response.json({ error: "Bad Request" }, {
+    return Response.json({ error: "Bad Request" }, {
       status: 200
     });
   }
