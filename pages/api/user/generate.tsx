@@ -1,5 +1,6 @@
 import { ImageResponse } from "@vercel/og";
 import React from "react";
+import { kv } from '@vercel/kv';
 
 export const config = {
   runtime: "edge",
@@ -11,6 +12,8 @@ const tradaoLogo = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGYAAAAUCAYAAA
 
 export default async function POST(req: any) {
   const data = decodeURIComponent((req.nextUrl as any).search.slice(1) || "");
+  console.log(`req.nextUrl--- ${req.nextUrl}`)
+  console.log(`data--- ${data}`)
   const query = Buffer.from(data, 'base64').toString('utf8');
   console.log('query:', query)
   let user = null;
@@ -35,7 +38,7 @@ export default async function POST(req: any) {
     const json = await res.json();
     src = json.data;
   } catch (e) {
-    console.log("err", e);
+    console.log("canvas err", e);
   }
 
   if (user.addr) {
@@ -43,6 +46,16 @@ export default async function POST(req: any) {
       user.addr.length - 5,
       user.addr.length
     )}`;
+  }
+
+  try {
+    const prefs = await kv.get(kvName) ?? {}
+    const key = `:${user.addr}:${exchange}`
+    //@ts-ignore
+    prefs.set(key, data)
+    await kv.set(kvName, prefs)
+  } catch (e) {
+    console.log("kv err", e);
   }
 
   const imageResponse = new ImageResponse(
