@@ -2,14 +2,11 @@ import { kv } from '@vercel/kv';
 
 
 export default async function GET(req: any, res: any) {
-  const data = (req.nextUrl as any).search.slice(1) || "";
-  const params = data.split('&')
-  let key = ''
-  for (var i = 0; i < params.length; i++) {
-    var pair = params[i].split("=");
-    key = key + ':' + pair[1]
+  if (!req.query || !Object.keys(req.query)) {
+    return res.status(500).json({ error: 'lack params' })
   }
-  if (key.length > 0) {
+  const key = req.query.addr + ':' + req.query.exchange
+  if (key) {
     console.log(`key--- ${key}`)
     try {
       const kvValue = await kv.get(key);
