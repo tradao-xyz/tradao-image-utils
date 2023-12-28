@@ -49,16 +49,14 @@ export default async function POST(req: any) {
   }
 
   try {
-    const prefs = await kv.get(kvName) ?? {}
     const key = `:${user.addr}:${exchange}`
-    //@ts-ignore
-    prefs.set(key, data)
-    await kv.set(kvName, prefs)
+    const kvValue = await kv.hgetall(key);
+    console.log(`kvValue--- ${kvValue}`)
   } catch (e) {
     console.log("kv err", e);
   }
 
-  const imageResponse = new ImageResponse(
+  return new ImageResponse(
     (
       <div
         style={{
@@ -299,6 +297,4 @@ export default async function POST(req: any) {
       height: 600,
     }
   );
-  console.log(`imageResponse --- ${JSON.stringify(imageResponse)}`)
-  return imageResponse;
 }
