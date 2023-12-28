@@ -17,6 +17,8 @@ export default async function GET(req: any, res: any) {
     try {
       const kvValue = await kv.get(key);
       console.log(`kvValue--- ${kvValue}`)
+      const imageUrl = `https://node.tradao.xyz/api/user/generate?${kvValue}`
+      res.status(200).json(imageUrl)
     } catch (e) {
       console.log("kv get err", e);
     }
